@@ -1,0 +1,268 @@
+<!--<html>-->
+<!--<head>-->
+<!--    <title>My first three.js app</title>-->
+<!--    <style>-->
+<!--        body { margin: 0; }-->
+<!--        canvas { width: 100%; height: 100% }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<script src="../lib/three.js"></script>-->
+<!--<script src="../lib/ColladaLoader.js"></script>-->
+
+<!--<script>-->
+
+<!--    var scene = new THREE.Scene();-->
+<!--    var camera = new THREE.PerspectiveCamera( 75, 360/480, 0.1, 1000 );-->
+
+<!--    var renderer = new THREE.WebGLRenderer();-->
+<!--    renderer.setSize( 360, 480 );-->
+<!--    document.body.appendChild( renderer.domElement );-->
+
+<!--    // var geometry = new THREE.BoxGeometry( 1, 1, 1 );-->
+<!--    // var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );-->
+<!--    // var cube = new THREE.Mesh( geometry, material );-->
+<!--    // scene.add( cube );-->
+<!--    // console.log(cube)-->
+
+<!--    camera.position.z = 5;-->
+
+<!--    // function load3DModel(){-->
+<!--        // /-->
+<!--        //     1、collada是一种基于XML的3D模型交互方案，简单来说，就是一种3D模型可以通过collada转换成另一种3D模型，-->
+<!--        //  从而，各种3D模型都可以通过collada转换成web支持的3D模型。-->
+<!--        //  2、。dae是一个钟3D模型的格式-->
+<!--        //     3、加载时注意浏览器同源策略的限制-->
+<!--        //     /-->
+<!--        var loader = new THREE.ColladaLoader();-->
+<!--        loader.load( "../lib/3D.dae", function ( collada ) {-->
+<!--            //找到模型中需要的对象。将相机看向这个对象是为了让这个对象显示在屏幕中心-->
+<!--            var modelObj;-->
+<!--            collada.scene.traverse( function ( child ) {-->
+<!--                if ( child instanceof THREE.SkinnedMesh ) {-->
+<!--                    modelObj = child;-->
+<!--                    camera.lookAt( child.position );-->
+<!--                    console.log('333333333333333')-->
+<!--                }-->
+<!--            } );-->
+<!--            //将模型的场景加入到整体的场景-->
+<!--            modelObj.material.opacity = 0.8;-->
+<!--            scene.add( collada.scene );-->
+
+<!--            // //显示出模型的骨骼的代码,不需要可删去-->
+<!--            // var helper = new THREE.SkeletonHelper( modelObj );-->
+<!--            // helper.material.linewidth = 3;-->
+<!--            // scene.add( helper );-->
+<!--        },undefined, function ( error ) {-->
+
+<!--        console.error("load error:::"+ error );-->
+
+<!--    } );-->
+<!--    // }-->
+
+<!--    // load3DModel();-->
+
+<!--    var animate = function () {-->
+<!--        requestAnimationFrame( animate );-->
+
+<!--        cube.rotation.x += 0.01;-->
+<!--        cube.rotation.y += 0.01;-->
+
+<!--        renderer.render( scene, camera );-->
+<!--    };-->
+
+<!--    // animate();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<html>
+<head>
+    <title>threeJS18-Loader-collada-skinning</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        #WebGL {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+<script src="../lib/jquery-3.5.1.js"></script>
+<script src="../lib/three.js"></script>
+<script src="../lib/ColladaLoader.js"></script>
+<!--<script src="../lib/OrbitControls.js"></script>-->
+<div id="WebGL"></div>
+<script>
+    'use strict';
+    var container, camera, scene, renderer, geometry, material, animate, controls; //常用变量
+    var spotLight, mshStdBox; //自定义对象变量
+    var target = new THREE.Vector3(0, 30, 0);
+    var model, skeleton;
+    var webGLW = $('#WebGL').width();
+    var webGLH = $('#WebGL').height();
+    var clock = new THREE.Clock();
+    var mixer; //存放动画数据
+    init();
+    animate();
+
+    function init() {
+        container = document.getElementById('WebGL');
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xcfcfcf);
+        scene.fog = new THREE.Fog(0xa0a0a0, 200, 1000); //雾
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 100, -150);
+
+        var ambient = new THREE.AmbientLight(0xffffff);
+        scene.add(ambient);
+
+        // lights(); //灯光：聚光灯
+        // lightsHelper(spotLight); //灯光显示助手
+        // plane()  地面
+        // Box(); //旋转的立方体
+        loadModel(); //添加人物模型
+        // rendererScene(); //场景渲染
+        // OrbitControls(camera, renderer); //OrbitControls控件模块，90版本鼠标右键上下是移动，96版本之后右键上下是缩放
+        // window.addEventListener('resize', onWindowResize, false); //监听屏幕变化
+
+    }
+
+    function plane() {
+        // 地面
+        let grid_mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshPhongMaterial({
+            color: 0x999999,
+            depthWrite: false
+        }));
+        grid_mesh.rotation.x = -Math.PI / 2;
+        grid_mesh.receiveShadow = true;
+        scene.add(grid_mesh);
+        var grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
+        grid.material.opacity = 0.2;
+        grid.material.transparent = true;
+        scene.add(grid);
+    }
+
+    function Box() {
+        // BoxGeometry( width, height, depth, widthSegments, heightSegments, depthSegments )
+        geometry = new THREE.BoxGeometry(80, 5, 80, 3, 3, 3);
+        var matStdObjects = new THREE.MeshStandardMaterial({
+            color: 0xA0cf00,
+            roughness: 0,
+            metalness: 0.6
+        });
+        mshStdBox = new THREE.Mesh(geometry, matStdObjects);
+        mshStdBox.position.set(0, -5, 0);
+        mshStdBox.rotation.set(0, Math.PI / 2.0, 0);
+        mshStdBox.castShadow = true;
+        mshStdBox.receiveShadow = true;
+        scene.add(mshStdBox);
+    }
+
+    function lights() {
+        //  SpotLight( color：颜色, intensity：强度, distance：发光距离, angle：角度, penumbra：边缘范围, decay：衰减 )
+        spotLight = new THREE.SpotLight(0xffffff, 1);
+        spotLight.position.set(10, 120, -30);
+        spotLight.angle = Math.PI / 4;
+        spotLight.penumbra = 0.05; //边缘范围，反比
+        spotLight.decay = 2; //衰减系数，反比
+        spotLight.distance = 400; //发光距离
+        spotLight.castShadow = true; //阴影
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 10; //近截面
+        spotLight.shadow.camera.far = 250;
+        scene.add(spotLight);
+    }
+
+    function lightsHelper(lightsObject) {
+        // 聚光灯显示助手SpotLightHelper( light:灯光, color：颜色 )
+        var lightHelper = new THREE.SpotLightHelper(lightsObject, 0xdfdfdf);
+        scene.add(lightHelper);
+        var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), new THREE.MeshPhongMaterial({
+            color: 0x9cfcf99,
+            depthWrite: false
+        }));
+        mesh.rotation.x = -Math.PI / 2;
+        mesh.position.set(0, -20, 0)
+        mesh.receiveShadow = true;
+        scene.add(mesh);
+    }
+
+    function loadModel() { //加载obj模型
+        // collada
+        var loader = new THREE.ColladaLoader();
+        loader.load('../../models/collada/stormtrooper/stormtrooper.dae', function (collada) {
+            console.log('collada:::', collada);
+
+            var animations = collada.animations;
+            var avatar = collada.scene;
+
+            avatar.scale.set(15, 15, 15);
+            avatar.rotation.x = -Math.PI / 2;
+            avatar.traverse(function (child) {
+                if (child.isMesh) { //开启阴影
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+            mixer = new THREE.AnimationMixer(avatar);
+            var action = mixer.clipAction(animations[0]).play();
+            scene.add(avatar);
+
+        });
+
+
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+    }
+
+    function rendererScene() {
+        renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.gammaInput = true;
+        renderer.gammaOutput = true;
+        container.appendChild(renderer.domElement);
+    }
+
+    function OrbitControls(camera, renderer) {
+        //OrbitControls控件操作模块
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.target = target; //控制的target
+        controls.autoRotate = true; //是否自动旋转
+        controls.autoRotateSpeed = 0.5; //自动旋转速度，正比
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        if (controls) controls.update();
+        mshStdBox.rotation.y += 0.01;
+        var delta = clock.getDelta();
+        if (mixer) mixer.update(delta);
+        renderer.render(scene, camera);
+    };
+</script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+.panel{
+
+    margin: 0 auto;
+
+}
+
+.panel>div{
+    float: left;
+    border: 1px solid grey;
+    height: 600px;
+}
+
+
+body{
+    /*background-color: #09099a;*/
+}
+.header{
+    width: 1325px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 20px;
+}
+#timeText{
+    float: right;
+    line-height: initial;
+    font-size: 14px;
+    text-align: right;
+    padding-top: 40px;
+}
+
+
+.leftDiv{
+    width: 345px;
+}
+.midDiv{
+    width: 555px;
+}
+.rightDiv{
+    width: 425px;
+}
+.leftDiv>div{
+    height: 200px;
+    border: 1px solid grey;
+}
+
+.midDiv>div{
+    border: 1px solid grey;
+}
+.midTop{
+    height: 350px;
+}
+.midBtm{
+    height: 250px;
+}
+.rightDiv>div{
+    height: 200px;
+}
+.rightTop{
+    height: 200px;
+}
+.rightBtm div{
+    height: 200px;
+    width: 210px;
+    float: left;
+    border: 1px solid grey;
+}
+#ltChart,#lmChart,#lbChart,#rtChart{
+    height: 200px;
+    width: inherit;
+}
+/*#rtChart{*/
+/*    position: relative;*/
+/*    left: 20%;*/
+/*}*/
+.subTitle{
+    height: 25px;
+    width: inherit;
+    margin: 0;
+}
+.titleLine{
+    float: left;
+    width: 5px;
+    height: inherit;
+    margin: 0;
+    background-color: #7b9bd2;
+}
+.titleText{
+    background-color: #2170a1;
+    color: white;
+    float: inside;
+    height: inherit;
+    /*margin-top: 2px;*/
+}

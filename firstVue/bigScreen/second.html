@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+<!--    <script src="../lib/echarts-en.common.js"></script>-->
+    <script src="../lib/echarts-en.js"></script>
+<!--    <script crossorigin="anonymous" integrity="sha384-qjEkmLVnx3Bug3NX1qwMHMw0+HoJNMUQ4ch5U2IVyw8egGTzQtyEzRbyIzpTH9A/" src="https://lib.baomitu.com/echarts/4.7.0/echarts-en.js"></script>-->
+    <script src="../lib/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/second.css">
+    <title>second</title>
+
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <span class="headerTitle">医院数据实时显示大屏</span>
+        <span class="headerTime">time</span>
+    </div>
+    <div class="panel">
+        <div class="left">
+            <div class="leftTop chartWrap">
+                <div class="subTitle">
+                    <div class="titleLine"></div>
+                    <div class="titleText">
+                        <p style="margin: 0 0 0 1em">重症医学ICU质量检测</p>
+                    </div>
+
+                </div>
+                <div id="ltChart" class="inchart"></div>
+            </div>
+            <div class="leftMid chartWrap">
+                <div class="subTitle">
+                    <div class="titleLine"></div>
+                    <div class="titleText">
+                        <p style="margin: 0 0 0 1em">住院重点疾病检测</p>
+                    </div>
+                </div>
+                <div id="lmChart" class="inchart"></div>
+            </div>
+            <div class="leftBtm chartWrap">
+                <div class="subTitle">
+                    <div class="titleLine"></div>
+                    <div class="titleText">
+                        <p style="margin: 0 0 0 1em">科室床位使用率及平均住院日</p>
+                    </div>
+
+
+                </div>
+                <div id="lbChart" class="inchart"></div>
+            </div>
+        </div>
+        <div class="middle">
+            <div class="midTop chartWrap">4</div>
+            <div class="midBtm chartWrap">
+                <div class="subTitle">
+                    <div class="titleLine"></div>
+                    <div class="titleText">
+                        <p style="margin: 0 0 0 1em">病人信息评估列表</p>
+                    </div>
+                </div>
+                <div id="mbChart" class="scrollTable">
+<!--滚动表格-->
+                    <ul><li>A</li><li>a</li></ul>
+                    <ul><li>B</li><li>b</li></ul>
+                    <ul><li>C</li><li>c</li></ul>
+                    <ul><li>D</li><li>d</li></ul>
+                    <ul><li>E</li><li>e</li></ul>
+                    <ul><li>F</li><li>f</li></ul>
+                    <ul><li>G</li><li>g</li></ul>
+                    <ul><li>H</li><li>h</li></ul>
+                    <ul><li>I</li><li>h</li></ul>
+                    <ul><li>J</li><li>h</li></ul>
+                    <ul><li>K</li><li>h</li></ul>
+                    <ul><li>M</li><li>h</li></ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="rightTop chartWrap">
+                <div class="subTitle">
+                    <div class="titleLine"></div>
+                    <div class="titleText">
+                        <p style="margin: 0 0 0 1em">住院重点手术检测</p>
+                    </div>
+                </div>
+<!--                <div class="numText">-->
+<!--                    <p>今日手术人次</p>-->
+<!--                    <p class="numScrol">123</p>-->
+<!--                </div>-->
+<!--                <div class="numText">-->
+<!--                    <p>昨日手术人次</p>-->
+<!--                    <p class="numScrol">456</p>-->
+<!--                </div>-->
+<!--                <div class="numText">-->
+<!--                    <p>今日手术人次</p>-->
+<!--                    <p class="numScrol">123</p>-->
+<!--                </div>-->
+                <div id="rtChart" class="inchart"></div>
+            </div>
+            <div class="rightMid chartWrap subChartWrap">
+                <div class="chartWrap" >
+                    <div class="subTitle">
+                        <div class="titleLine"></div>
+                        <div class="titleText">
+                            <p style="margin: 0 0 0 1em">全院收入占比</p>
+                        </div>
+                    </div>
+                    <div id="rbchart1" class="inchart schart"></div>
+                </div>
+                <div class="chartWrap" >
+                    <div class="subTitle">
+                        <div class="titleLine"></div>
+                        <div class="titleText">
+                            <p style="margin: 0 0 0 1em">医学影像人次比对</p>
+                        </div>
+                    </div>
+                    <div id="rbchart2" class="inchart schart"></div>
+                </div>
+            </div>
+
+            <div class="rightBtm chartWrap subChartWrap">
+                <div class="chartWrap" >
+                    <div class="subTitle">
+                        <div class="titleLine"></div>
+                        <div class="titleText">
+                            <p style="margin: 0 0 0 1em">医学影像人次比对</p>
+                        </div>
+                    </div>
+                    <div id="rbchart3" class="inchart schart"></div>
+                </div>
+                <div class="chartWrap" >
+                    <div class="subTitle">
+                        <div class="titleLine"></div>
+                        <div class="titleText">
+                            <p style="margin: 0 0 0 1em">疾病诊断TOP10</p>
+                        </div>
+                    </div>
+                    <div id="rbchart4" class="inchart schart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="js/second.js"></script>
+</html>

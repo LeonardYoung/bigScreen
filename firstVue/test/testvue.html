@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 100%;
+        }
+        .wrap {
+            height: 100%;
+            flex-flow: column;
+            display:flex;
+        }
+        .header {
+            height: 30px;
+            line-height: 30px;
+            background: pink;
+        }
+        .wrapper {
+            flex: 1;
+            display:flex;
+            border: 1px solid blue;
+        }
+        .left, .middle, .right {
+            flex: 1;
+            display:flex;
+            flex-flow: column;
+            padding: 5px 0;
+        }
+        .cl {
+            border: 1px solid pink;
+            flex: 1;
+            flex-direction: row;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">头部标题</div>
+    <div class="wrapper">
+        <div class="left">
+            <div class="cl">1</div>
+            <div class="cl">2</div>
+            <div class="cl">3</div>
+        </div>
+        <div class="middle">
+            <div class="cl">4</div>
+            <div class="cl">5</div>
+            <div class="cl">6</div>
+            <div class="cl">7</div>
+        </div>
+        <div class="right">
+            <div class="cl">8</div>
+            <div class="cl">9</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
