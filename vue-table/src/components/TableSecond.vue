@@ -212,13 +212,13 @@
                     })
                     .then(function(response) {
                         //成功时服务器返回 response 数据
-                        // console.log(response.data)
+                        //  console.log(response.data)
 
                         //因为绑定在数组上，所以要手动更新
                         let first = DataTableApp.input[index]
                         let obj = first[col]
-                        obj =  response.data
 
+                        obj =  response.data
                         DataTableApp.$set(DataTableApp.input[index],col,obj)
                         DataTableApp.$set(DataTableApp.input,index,first)
                         DataTableApp.$forceUpdate()

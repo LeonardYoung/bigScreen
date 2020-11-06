@@ -70,7 +70,7 @@
                         if(one.type === 'pie'){
                             for(let i = 0;i < one.data.length;i++){
                                 one.data[i].name = that.info.chartCategory[i]
-                                console.log(one.data[i].name)
+                                // console.log(one.data[i].name)
                             }
                         }
                     }
@@ -83,8 +83,8 @@
                     that.fetchChartData()
 
                 })
-                .catch(function(error) {
-                    console.log(error);
+                .catch(function() {
+                    // console.log(error);
                 });
             },
             fetchChartData:function () {
@@ -92,7 +92,7 @@
                 // if(typeof(this.info.chartName) == 'undefined')
                 //     return
                 // 遍历一个图表中的每一个Series
-                console.log(this.info)
+                // console.log(this.info)
                 for(let seriesIndex = 0;seriesIndex < this.info.seriesNames.length;seriesIndex++){
                     // console.log('fetching data chartName=' + this.info.chartNames)
 
@@ -139,7 +139,7 @@
                     this.echarInstance.setOption(this.info.option);
                 }
                 else if(this.info.innertype === 'tableRoll'){
-                    console.log('table')
+                    // console.log('table')
                 }
             }
 

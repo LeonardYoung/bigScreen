@@ -94,11 +94,12 @@ app.post('/fetchChartData',function(req,res){
     //获取登录名称和密码
     let chartName=req.body.chartName ;
     let seriesName=req.body.seriesName ;
-    console.log('fetching data  chartName='+chartName + '  seriesName='+seriesName)
+    console.log('fetching data  chartName='+chartName + '  seriesName='+seriesName+';')
 
     let quertStr = 'select data from chart_data where chart_name= \'' + chartName + '\''
-    + ' and series_name = \'' + seriesName + ' \''
+    + ' and series_name = \'' + seriesName + '\''
 
+    // console.log(quertStr)
     connection.query(quertStr, function (error, results, fields) {
         if (error) throw error;
         if(results.length === 0)
