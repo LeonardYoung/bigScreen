@@ -6,4 +6,7 @@
     <select id="getChartData" resultType="com.yangsj.entity.ChartData">
         select * from bigscreen.chart_data;
     </select>
+    <select id="getOneData" resultType="string">
+        select data from bigscreen.chart_data where chart_name=#{chartName} and series_name=#{seriesName};
+    </select>
 </mapper>
