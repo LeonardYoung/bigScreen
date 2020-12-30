@@ -4,9 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yangsj.dao.ChartDataDao">
     <select id="getChartData" resultType="com.yangsj.entity.ChartData">
-        select * from bigscreen.chart_data;
+        select chart_name, series_name, data from bigscreen.chart_data;
     </select>
-    <select id="getOneData" resultType="string">
+
+    <select id="getOneChartData" resultType="string">
         select data from bigscreen.chart_data where chart_name=#{chartName} and series_name=#{seriesName};
     </select>
+
+    <update id="updateOneChartData" >
+        update bigscreen.chart_data set data=#{data} where chart_name=#{chartName} and series_name=#{seriesName}
+    </update>
+
 </mapper>

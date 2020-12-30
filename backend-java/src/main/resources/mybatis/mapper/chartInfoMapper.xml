@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangsj.dao.ChartInfoDao">
+    <select id="getChartInfo" resultType="com.yangsj.entity.ChartInfo">
+        select * from bigscreen.chart_info;
+    </select>
+
+
+    <select id="getOneChartInfo" resultType="com.yangsj.entity.ChartInfo">
+        select * from bigscreen.chart_info where chart_name=#{chartName};
+    </select>
+    <update id="updateOneChartInfo" >
+        update bigscreen.chart_info set title=#{title},categorys=#{categorys},
+                                        series=#{series} where chart_name=#{chartName}
+    </update>
+
+</mapper>

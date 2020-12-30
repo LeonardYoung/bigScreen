@@ -1,15 +1,17 @@
 package com.yangsj.controller;
 
 import com.yangsj.dao.ChartDataDao;
+import com.yangsj.dao.ChartInfoDao;
 import com.yangsj.entity.ChartData;
+import com.yangsj.entity.ChartInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class TestController {
@@ -21,21 +23,65 @@ public class TestController {
 
     @Autowired
     ChartDataDao chartDataDao;
+    @Autowired
+    ChartInfoDao chartInfoDao;
 
-    @GetMapping("/getAllChartData")
+    @RequestMapping("/getAllChartData")
     public List<ChartData> getAllChartData(){
         return chartDataDao.getChartData();
     }
 
-    @GetMapping("/getOneChartData")
+    @RequestMapping("/getAllChartInfo")
+    public List<ChartInfo> getAllChartInfo() { return chartInfoDao.getChartInfo();}
+
+
+
+    @RequestMapping("/fetchChartData")
     public String getOneChartData(
             @RequestParam("chartName") String chartName,
             @RequestParam("seriesName") String seriesName
     ){
-        System.out.println(chartName +"----"+ seriesName);
         HashMap<String,String> paras = new HashMap<>();
         paras.put("chartName",chartName);
         paras.put("seriesName",seriesName);
-        return chartDataDao.getOneData(paras);
+        return chartDataDao.getOneChartData(paras);
+    }
+
+    @RequestMapping("/submitChartData")
+    public String updateOneChartData(
+            @RequestParam("chartName") String chartName,
+            @RequestParam("seriesName") String seriesName,
+            @RequestParam("data") String data
+    ){
+        HashMap<String,String> paras = new HashMap<>();
+        paras.put("chartName",chartName);
+        paras.put("seriesName",seriesName);
+        paras.put("data",data);
+        chartDataDao.updateOneChartData(paras);
+        return "OK";
+    }
+
+
+    @RequestMapping("/fetchChartInfo")
+    public ChartInfo getOneChartInfo(
+            @RequestParam("chartName") String chartName
+    ){
+        return chartInfoDao.getOneChartInfo(chartName);
+    }
+
+    @RequestMapping("/submitChartInfo")
+    public String updateOneChartInfo(
+            @RequestParam("chartName") String chartName,
+            @RequestParam("title") String title,
+            @RequestParam("category") String category,
+            @RequestParam("series") String series
+    ){
+        HashMap<String,String> paras = new HashMap<>();
+        paras.put("chartName",chartName);
+        paras.put("title",title);
+        paras.put("categorys",category);
+        paras.put("series",series);
+        chartInfoDao.updateOneChartInfo(paras);
+        return "OK";
     }
 }

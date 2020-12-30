@@ -12,5 +12,7 @@ import java.util.Map;
 public interface ChartDataDao {
     List<ChartData> getChartData();
 
-    String getOneData(Map paraMap);
+    String getOneChartData(Map paraMap);
+    void updateOneChartData(Map paraMap);
+
 }

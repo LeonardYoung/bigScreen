@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ChartData {
+public class ChartInfo {
     String chart_name;
-    String series_name;
-    String data;
+    String title;
+    String categorys;
+    String series;
 }
